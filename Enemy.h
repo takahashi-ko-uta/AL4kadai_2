@@ -1,4 +1,5 @@
 #pragma once
+#include "ENbullet.h"
 #include "WinApp.h"
 #include "Input.h"
 #include "Object3d.h"
@@ -17,6 +18,7 @@ public:
 	//更新処理
 	void Update();
 	void Move();
+	void Attack();
 	//描画処理
 	void SpriteDraw();
 	void ObjDraw();
@@ -31,4 +33,12 @@ private:
 	uint16_t moveTimer = 0;
 	bool isMove = true;
 	uint16_t moveDirection = 0;//1...上、2...下、3...左、4...右
+
+	//弾
+	std::list<std::unique_ptr<EnemyBullet>> bullets_;
+	
+	//攻撃のタイマー
+	uint16_t atttackTimer = 0;
+	bool isAttack = false;
+
 };

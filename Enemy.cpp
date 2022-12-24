@@ -17,6 +17,25 @@ void Enemy::Initialize(Input* input)
 void Enemy::Update()
 {
 	Move();
+
+	//ŠÔŠu‚ğ‚ ‚¯‚ÄUŒ‚‚·‚é
+	const uint16_t interval = 50;
+	if (atttackTimer <= interval)
+	{
+		atttackTimer++;
+		if (atttackTimer >= interval)
+		{
+			Attack();
+			atttackTimer = 0;
+		}
+	}
+	
+	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
+		bullet->Update();
+	}
+
+	//ƒfƒXƒtƒ‰ƒO‚ª—§‚Á‚½’e‚ğ”rœ
+	bullets_.remove_if([](std::unique_ptr<EnemyBullet>& bullet) { return bullet->IsDead(); });
 }
 
 void Enemy::Move()
@@ -59,6 +78,16 @@ void Enemy::Move()
 	object3d->Update();
 }
 
+void Enemy::Attack()
+{
+	//’e‚ğ¶¬‚µA‰Šú‰»
+	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
+	newBullet->Initialize(model_,Position);
+
+	//’e‚ğ“o˜^‚·‚é
+	bullets_.push_back(std::move(newBullet));
+}
+
 void Enemy::SpriteDraw()
 {
 
@@ -67,4 +96,8 @@ void Enemy::SpriteDraw()
 void Enemy::ObjDraw()
 {
 	object3d->Draw();
+	//’e•`‰æ
+	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
+		bullet->Draw();
+	}
 }

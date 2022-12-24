@@ -24,7 +24,7 @@ void Stage::Update()
 
 void Stage::SpriteDraw()
 {
-	sprite_stage1->Draw();
+	//sprite_stage1->Draw();
 }
 
 void Stage::ObjDraw()
