@@ -36,9 +36,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     SpriteCommon* spriteCommon = nullptr;
     spriteCommon = new SpriteCommon();
     spriteCommon->Initialize(dxCommon);
-    spriteCommon->LoadTexture(0, "texture.png");
-    spriteCommon->LoadTexture(1, "reimu.png");
-
+    spriteCommon->LoadTexture(0, "stage1.png");
+    spriteCommon->LoadTexture(1, "stage2.png");
+    spriteCommon->LoadTexture(2, "stage3.png");
     //object3dの初期化
     Object3d::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 #pragma endregion 基盤システム初期化
@@ -48,13 +48,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     Sprite* sprite = nullptr;
     sprite = new Sprite();
     sprite->SetTextureIndex(0);
-    sprite->Initialize(spriteCommon,0);
+    sprite->Initialize(spriteCommon,2);
     
     //ゲームシーン初期化
     GameScene* gameScene = nullptr;
     gameScene = new GameScene();
 
-    gameScene->Initialize(input,dxCommon);
+    gameScene->Initialize(input,spriteCommon);
 
 #pragma endregion 最初のシーンの初期化
     
@@ -85,7 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region 最初のシーンの描画
 
         spriteCommon->PreDraw();
-        sprite->Draw();
+        //sprite->Draw();
         gameScene->SpriteDraw();
         spriteCommon->PostDraw();
 
