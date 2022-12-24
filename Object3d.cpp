@@ -334,11 +334,7 @@ bool Object3d::Initialize()
 	assert(SUCCEEDED(result));
 
 
-
-
-
 	return true;
-
 }
 
 void Object3d::Update()

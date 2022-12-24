@@ -72,10 +72,10 @@ void DirectXCommon::PreDraw()
 
     // シザー矩形
     D3D12_RECT scissorRect{};
-    scissorRect.left = 0;                                       // 切り抜き座標左
-    scissorRect.right = scissorRect.left + winApp->window_width;        // 切り抜き座標右
-    scissorRect.top = 0;                                        // 切り抜き座標上
-    scissorRect.bottom = scissorRect.top + winApp->window_height;       // 切り抜き座標下
+    scissorRect.left = 0;                                            // 切り抜き座標左
+    scissorRect.right = scissorRect.left + winApp->window_width;     // 切り抜き座標右
+    scissorRect.top = 0;                                             // 切り抜き座標上
+    scissorRect.bottom = scissorRect.top + winApp->window_height;    // 切り抜き座標下
     // シザー矩形設定コマンドを、コマンドリストに積む
     commandList->RSSetScissorRects(1, &scissorRect);
 }

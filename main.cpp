@@ -6,11 +6,13 @@
 #include "Object3d.h"
 #include "Model.h"
 
+#include "GameScene.h"
+
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 基盤システム初期化
-    HRESULT result;
 
     //WindowsAPIの初期化
     WinApp* winApp = nullptr;
@@ -23,6 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     DirectXCommon* dxCommon = nullptr;
     dxCommon = new DirectXCommon();
     dxCommon->Initialize(winApp);
+    
 
     //inputの初期化
     Input* input = nullptr;
@@ -31,7 +34,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
     //スプライト共通部の初期化
     SpriteCommon* spriteCommon = nullptr;
-    spriteCommon = new SpriteCommon;
+    spriteCommon = new SpriteCommon();
     spriteCommon->Initialize(dxCommon);
     spriteCommon->LoadTexture(0, "texture.png");
     spriteCommon->LoadTexture(1, "reimu.png");
@@ -46,23 +49,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     sprite = new Sprite();
     sprite->SetTextureIndex(0);
     sprite->Initialize(spriteCommon,0);
-  
-    //.objからモデルデータを読み込む
-    Model* model_ground = Model::LoadFromOBJ("ground");
-    Model* model_triangle = Model::LoadFromOBJ("triangle_mat");
-    Model* model_cube = Model::LoadFromOBJ("cube");
-    //3Dオブジェクト生成
-    Object3d* object3d_1 = Object3d::Create();
-    Object3d* object3d_2 = Object3d::Create();
-    Object3d* object3d_3 = Object3d::Create();
-    //3Dオブジェクトと3Dモデルを紐づける
-    object3d_1->SetModel(model_ground);
-    object3d_2->SetModel(model_triangle);
-    object3d_3->SetModel(model_cube);
-    //各3Dオブジェクトの位置指定
-    object3d_1->SetPosition({ 0,-5, 0 });
-    object3d_2->SetPosition({ -5,0,-5 });
-    object3d_3->SetPosition({ +5,0,+5 });
+    
+    //ゲームシーン初期化
+    GameScene* gameScene = nullptr;
+    gameScene = new GameScene();
+
+    gameScene->Initialize(input,dxCommon);
+
 #pragma endregion 最初のシーンの初期化
     
 #pragma region ゲームループ
@@ -82,9 +75,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region 最初のシーンの更新
 
         sprite->Update();
-        object3d_1->Update();
-        object3d_2->Update();
-        object3d_3->Update();
+        gameScene->Update();
 
 #pragma endregion 最初のシーンの更新
         
@@ -95,12 +86,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
         spriteCommon->PreDraw();
         sprite->Draw();
+        gameScene->SpriteDraw();
         spriteCommon->PostDraw();
 
         Object3d::PreDraw(dxCommon->GetCommandList());
-        object3d_1->Draw();
-        object3d_2->Draw();
-        object3d_3->Draw();
+
+        gameScene->ObjDraw();
 
         Object3d::PostDraw();
 
@@ -126,14 +117,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     delete winApp;
     //スプライト共通部解放
     delete spriteCommon;
-    //3Dモデルの解放
-    delete model_ground;
-    delete model_triangle;
-    delete model_cube;
-    //3Dオブジェクト解放
-    delete object3d_1;
-    delete object3d_2;
-    delete object3d_3;
+    //ゲームシーン解放
+    delete gameScene;
 
 #pragma endregion 基盤システムの終了
 
