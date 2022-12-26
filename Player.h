@@ -21,6 +21,10 @@ public:
 	void SpriteDraw();
 	void ObjDraw();
 
+	void OnCollision();
+
+	XMFLOAT3 GetPosition();
+
 private:
 	Input* input_ = nullptr;
 	
@@ -28,6 +32,6 @@ private:
 
 	Model* model_ = nullptr;
 	Object3d* object3d = Object3d::Create();
-	XMFLOAT3 Position = {0.0f,0.0f,0.0f};
+	XMFLOAT3 position_ = {0.0f,0.0f,0.0f};
 };
 

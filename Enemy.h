@@ -23,6 +23,8 @@ public:
 	void SpriteDraw();
 	void ObjDraw();
 
+	const std::list<std::unique_ptr<EnemyBullet>>& GetBullet() { return bullets_; }
+
 private:
 	Input* input_ = nullptr;
 	Model* model_ = nullptr;

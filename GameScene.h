@@ -14,10 +14,16 @@ public:
 	GameScene();
 	~GameScene();
 
+	//‰Šú‰»ˆ—
 	void Initialize(Input* input, SpriteCommon* spriteCommon);
+	//XVˆ—
 	void Update();
+	//•`‰æˆ—
 	void SpriteDraw();
 	void ObjDraw();
+
+	//“–‚½‚è”»’è
+	void CheckAllCollisons();
 
 private:
 	Input* input_ = nullptr;

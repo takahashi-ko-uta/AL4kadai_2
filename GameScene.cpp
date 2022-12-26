@@ -37,3 +37,38 @@ void GameScene::ObjDraw()
 	enemy_->ObjDraw();
 	stage_->ObjDraw();
 }
+
+
+void GameScene::CheckAllCollisons()
+{
+	//判定対象AとBの座標
+	XMFLOAT3 posA, posB;
+
+	//敵弾リストの取得
+	const std::list<std::unique_ptr<EnemyBullet>>& enemyBullets = enemy_->GetBullet();
+
+#pragma region 自キャラと敵弾の当たり判定
+	//自キャラの座標
+	posA = player_->GetPosition();
+
+	//自キャラと敵弾全ての当たり判定
+	for (const std::unique_ptr<EnemyBullet>& bullet : enemyBullets) {
+		//敵弾の座標
+		posB = bullet->GetPosition();
+
+		const float AR = 1;
+		const float BR = 1;
+
+		float A = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
+		float B = pow((AR + BR), 2);
+
+		if (A <= B) {
+			//自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			//敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+#pragma endregion
+
+}

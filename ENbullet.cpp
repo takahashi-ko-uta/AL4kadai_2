@@ -37,7 +37,7 @@ void EnemyBullet::OnCollision()
 	isDead_ = true;
 }
 
-XMFLOAT3 EnemyBullet::GetWorldPosition() 
+XMFLOAT3 EnemyBullet::GetPosition() 
 {
 	//ƒ[ƒ‹ƒhÀ•W‚ğ“ü‚ê‚é•Ï”
 	XMFLOAT3 worldPos;
