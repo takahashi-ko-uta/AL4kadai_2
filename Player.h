@@ -28,10 +28,10 @@ public:
 private:
 	Input* input_ = nullptr;
 	
-
-
 	Model* model_ = nullptr;
 	Object3d* object3d = Object3d::Create();
 	XMFLOAT3 position_ = {0.0f,0.0f,0.0f};
+
+	float radius = 3.0f;
 };
 

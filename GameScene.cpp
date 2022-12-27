@@ -22,6 +22,8 @@ void GameScene::Update()
 	player_->Update();
 	enemy_->Update();
 	stage_->Update();
+	//“–‚½‚è”»’è
+	CheckAllCollisons();
 }
 
 void GameScene::SpriteDraw()
@@ -56,8 +58,8 @@ void GameScene::CheckAllCollisons()
 		//“G’e‚ÌÀ•W
 		posB = bullet->GetPosition();
 
-		const float AR = 1;
-		const float BR = 1;
+		const float AR = 2.0f;//A‚Ì”¼Œa
+		const float BR = 2.0f;//B‚Ì”¼Œa
 
 		float A = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
 		float B = pow((AR + BR), 2);

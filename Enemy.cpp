@@ -12,6 +12,7 @@ void Enemy::Initialize(Input* input)
 	//オブジェクトの初期設定
 	float scale = 2.0f;
 	object3d->SetScale({ scale,scale,scale });
+	object3d->Update();
 }
 
 void Enemy::Update()
@@ -40,41 +41,65 @@ void Enemy::Update()
 
 void Enemy::Move()
 {
-	float speed = 0.1f;
-	uint16_t interval = 20;
-	srand(time(nullptr));
-	//方向を抽選
-	if(isMove == true)
-	{
-		++moveTimer;
-		if(moveTimer >= interval)
-		{
-			moveDirection = rand()%4+1;//1～4を取得
-			isMove = false;
-		}
-	}
+	//float speed = 0.1f;
+	//uint16_t interval = 20;
+	//srand(time(nullptr));
+	////方向を抽選
+	//if(isMove == true)
+	//{
+	//	++moveTimer;
+	//	if(moveTimer >= interval)
+	//	{
+	//		moveDirection = rand()%4+1;//1～4を取得
+	//		isMove = false;
+	//	}
+	//}
+
+	////移動
+	//switch (moveDirection)
+	//{
+	//case 1://上
+	//	Position.y += speed;
+	//	isMove = true;
+	//	break; 
+	//case 2://下
+	//	Position.y -= speed;
+	//	isMove = true;
+	//	break;
+	//case 3://左
+	//	Position.x -= speed;
+	//	isMove = true;
+	//	break;
+	//case 4://右
+	//	Position.x += speed;
+	//	isMove = true;
+	//	break;
+	//}
+	//object3d->SetPosition({ Position.x, Position.y, Position.z });
+	//object3d->Update();
 
 	//移動
-	switch (moveDirection)
+	float speed = 0.1f;
+	if (input_->PushKey(DIK_UP))
 	{
-	case 1://上
-		Position.y += speed;
-		isMove = true;
-		break; 
-	case 2://下
-		Position.y -= speed;
-		isMove = true;
-		break;
-	case 3://左
-		Position.x -= speed;
-		isMove = true;
-		break;
-	case 4://右
-		Position.x += speed;
-		isMove = true;
-		break;
+		position_.y += speed;
 	}
-	object3d->SetPosition({ Position.x, Position.y, Position.z });
+	if (input_->PushKey(DIK_DOWN))
+	{
+		position_.y -= speed;
+	}
+	if (input_->PushKey(DIK_LEFT))
+	{
+		position_.x -= speed;
+	}
+	if (input_->PushKey(DIK_RIGHT))
+	{
+		position_.x += speed;
+	}
+	//position_.z = -20.0f;
+	position_.z = 0.0f;
+	position_.x = -20.0f;
+	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->Update();
 }
 
@@ -82,7 +107,7 @@ void Enemy::Attack()
 {
 	//弾を生成し、初期化
 	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
-	newBullet->Initialize(model_,Position);
+	newBullet->Initialize(model_,position_);
 
 	//弾を登録する
 	bullets_.push_back(std::move(newBullet));
