@@ -41,7 +41,7 @@ void Enemy::Update()
 
 void Enemy::Move()
 {
-	float speed = 0.1f;
+	float speed = 0.3f;
 	uint16_t interval = 20;
 	srand(time(nullptr));
 	//•ûŒü‚ğ’Š‘I
@@ -59,19 +59,27 @@ void Enemy::Move()
 	switch (moveDirection)
 	{
 	case 1://ã
-		position_.y += speed;
+		if (position_.y <= 27.0f){
+			position_.y += speed;
+		}
 		isMove = true;
 		break; 
 	case 2://‰º
-		position_.y -= speed;
+		if (position_.y >= -27.0f) {
+			position_.y -= speed;
+		}
 		isMove = true;
 		break;
 	case 3://¶
-		position_.x -= speed;
+		if (position_.x >= -50.0f) {
+			position_.x -= speed;
+		}
 		isMove = true;
 		break;
 	case 4://‰E
-		position_.x += speed;
+		if (position_.x <= 50.0f) {
+			position_.x += speed;
+		}
 		isMove = true;
 		break;
 	}

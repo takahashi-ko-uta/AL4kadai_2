@@ -21,24 +21,27 @@ void Player::Update()
 void Player::Move()
 {
 	//ˆÚ“®
-	float speed = 0.1f;
-	
-	if (input_->PushKey(DIK_UP))
+	float speed = 0.5f;
+	XMFLOAT3 move = { 0.0f,0.0f,0.0f };
+	if (input_->PushKey(DIK_UP) && position_.y <= 27.0f)
 	{
-		position_.y += speed;
+		move.y += speed;
 	}
-	if (input_->PushKey(DIK_DOWN))
+	if (input_->PushKey(DIK_DOWN) && position_.y >= -27.0f)
 	{
-		position_.y -= speed;
+		move.y -= speed;
 	}
-	if (input_->PushKey(DIK_LEFT))
+	if (input_->PushKey(DIK_LEFT) && position_.x >= -50.0f)
 	{
-		position_.x -= speed;
+		move.x -= speed;
 	}
-	if (input_->PushKey(DIK_RIGHT))
+	if (input_->PushKey(DIK_RIGHT) && position_.x <= 50.0f)
 	{
-		position_.x += speed;
+		move.x += speed;
 	}
+	position_.x += move.x;
+	position_.y += move.y;
+	position_.z += move.z;
 	//position_.z = -20.0f;
 	position_.z = 0.0f;
 	object3d->SetPosition({ position_.x, position_.y, position_.z });
