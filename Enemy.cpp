@@ -41,64 +41,40 @@ void Enemy::Update()
 
 void Enemy::Move()
 {
-	//float speed = 0.1f;
-	//uint16_t interval = 20;
-	//srand(time(nullptr));
-	////•ûŒü‚ð’Š‘I
-	//if(isMove == true)
-	//{
-	//	++moveTimer;
-	//	if(moveTimer >= interval)
-	//	{
-	//		moveDirection = rand()%4+1;//1`4‚ðŽæ“¾
-	//		isMove = false;
-	//	}
-	//}
-
-	////ˆÚ“®
-	//switch (moveDirection)
-	//{
-	//case 1://ã
-	//	Position.y += speed;
-	//	isMove = true;
-	//	break; 
-	//case 2://‰º
-	//	Position.y -= speed;
-	//	isMove = true;
-	//	break;
-	//case 3://¶
-	//	Position.x -= speed;
-	//	isMove = true;
-	//	break;
-	//case 4://‰E
-	//	Position.x += speed;
-	//	isMove = true;
-	//	break;
-	//}
-	//object3d->SetPosition({ Position.x, Position.y, Position.z });
-	//object3d->Update();
+	float speed = 0.1f;
+	uint16_t interval = 20;
+	srand(time(nullptr));
+	//•ûŒü‚ð’Š‘I
+	if(isMove == true)
+	{
+		++moveTimer;
+		if(moveTimer >= interval)
+		{
+			moveDirection = rand()%4+1;//1`4‚ðŽæ“¾
+			isMove = false;
+		}
+	}
 
 	//ˆÚ“®
-	float speed = 0.1f;
-	if (input_->PushKey(DIK_UP))
+	switch (moveDirection)
 	{
+	case 1://ã
 		position_.y += speed;
-	}
-	if (input_->PushKey(DIK_DOWN))
-	{
+		isMove = true;
+		break; 
+	case 2://‰º
 		position_.y -= speed;
-	}
-	if (input_->PushKey(DIK_LEFT))
-	{
+		isMove = true;
+		break;
+	case 3://¶
 		position_.x -= speed;
-	}
-	if (input_->PushKey(DIK_RIGHT))
-	{
+		isMove = true;
+		break;
+	case 4://‰E
 		position_.x += speed;
+		isMove = true;
+		break;
 	}
-	//position_.z = -20.0f;
-	position_.z = 0.0f;
-	position_.x = -20.0f;
 	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->Update();
 }

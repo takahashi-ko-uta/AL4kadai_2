@@ -15,7 +15,7 @@ void Player::Initialize(Input* input)
 
 void Player::Update()
 {
-	//Move();
+	Move();
 }
 
 void Player::Move()
@@ -38,8 +38,8 @@ void Player::Move()
 	{
 		position_.x += speed;
 	}
-	//position_.z = -20.0f;
-	position_.z = 0.0f;
+	position_.z = -20.0f;
+	//position_.z = 0.0f;
 	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->Update();
 }
