@@ -22,6 +22,7 @@ void Player::Move()
 {
 	//ˆÚ“®
 	float speed = 0.1f;
+	
 	if (input_->PushKey(DIK_UP))
 	{
 		position_.y += speed;
@@ -38,8 +39,8 @@ void Player::Move()
 	{
 		position_.x += speed;
 	}
-	position_.z = -20.0f;
-	//position_.z = 0.0f;
+	//position_.z = -20.0f;
+	position_.z = 0.0f;
 	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->Update();
 }
