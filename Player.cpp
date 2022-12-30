@@ -42,8 +42,8 @@ void Player::Move()
 	position_.x += move.x;
 	position_.y += move.y;
 	position_.z += move.z;
-	//position_.z = -20.0f;
-	position_.z = 0.0f;
+	position_.z = -20.0f;
+	//position_.z = 0.0f;
 	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->Update();
 }

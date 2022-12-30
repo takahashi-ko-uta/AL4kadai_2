@@ -1,33 +1,37 @@
 #include "Stage.h"
 #include <stdio.h>
 #include <time.h>
+#define PI 3.14159
 
-void Stage::Initialize(Input* input, SpriteCommon* spriteCommon)
+void Stage::Initialize()
 {
-	input_ = input;
-	spriteCommon_ = spriteCommon;
-	sprite_stage1 = new Sprite();
-	sprite_stage1->SetTextureIndex(2);
-	sprite_stage1->Initialize(spriteCommon_, 2);
-	//spriteの初期設定
-	float size = 50.0f;
-	sprite_stage1->SetSize({ size,size });
-	sprite_stage1->Update();
+	//オブジェクトを指定
+	model_ = Model::LoadFromOBJ("skydome");
+	//3Dオブジェクトと3Dモデルを紐づける
+	object3d->SetModel(model_);
+	//オブジェクトの初期設定
+	float scale = 70.0f;
+	object3d->SetScale({ scale,scale,scale });
+	object3d->Update();
 }
 
 void Stage::Update()
 {
-	sprite_stage1->Update();
-	
+	MoveRot();
 }
 
+void Stage::MoveRot()
+{
+	object3d->Update();
+}
 
 void Stage::SpriteDraw()
 {
-	//sprite_stage1->Draw();
+
 }
+	
 
 void Stage::ObjDraw()
 {
-	
+	object3d->Draw();
 }

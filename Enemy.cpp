@@ -83,6 +83,14 @@ void Enemy::Move()
 		isMove = true;
 		break;
 	}
+
+	//デバック用
+	if (input_->PushKey(DIK_D)) {
+		position_.x = 0.0f;
+		position_.y = 0.0f;
+	}
+
+	position_.z = +20.0f;
 	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->Update();
 }

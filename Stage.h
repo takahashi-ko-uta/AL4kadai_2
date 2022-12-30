@@ -16,9 +16,10 @@ class Stage
 {
 public:
 	//‰Šú‰»ˆ—
-	void Initialize(Input* input, SpriteCommon* spriteCommon);
+	void Initialize();
 	//XVˆ—
 	void Update();
+	void MoveRot();
 
 	//•`‰æˆ—
 	void SpriteDraw();
@@ -26,10 +27,8 @@ public:
 
 private:
 	Input* input_ = nullptr;
-	SpriteCommon* spriteCommon_ = nullptr;
-	//SpriteCommon* spriteCommon_= new SpriteCommon();
-	Sprite* sprite_stage1 = new Sprite();
-	Sprite* sprite_stage2 = new Sprite();
-	Sprite* sprite_stage3 = new Sprite();
 	
+	Model* model_ = nullptr;
+	Object3d* object3d = Object3d::Create();
+	XMFLOAT3 position_ = { 0.0f,0.0f,0.0f };
 };

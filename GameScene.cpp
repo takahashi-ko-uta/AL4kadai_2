@@ -14,7 +14,7 @@ void GameScene::Initialize(Input* input, SpriteCommon* spriteCommon)
 	spriteCommon_ = spriteCommon;
 	player_->Initialize(input_);
 	enemy_->Initialize(input_);
-	stage_->Initialize(input_, spriteCommon_);
+	stage_->Initialize();
 }
 
 void GameScene::Update()
