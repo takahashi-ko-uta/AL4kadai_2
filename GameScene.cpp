@@ -1,5 +1,7 @@
 #include "GameScene.h"
 
+#define PI 3.14159
+
 GameScene::GameScene(){}
 GameScene::~GameScene()
 {
@@ -12,12 +14,50 @@ void GameScene::Initialize(Input* input, SpriteCommon* spriteCommon)
 {
 	input_ = input;
 	spriteCommon_ = spriteCommon;
+
+	//オブジェクトを指定
+	model_title = Model::LoadFromOBJ("title");
+	model_ending = Model::LoadFromOBJ("ending");
+	//3Dオブジェクトと3Dモデルを紐づける
+	objTitle->SetModel(model_title);
+	objEnding->SetModel(model_ending);
+
 	player_->Initialize(input_);
 	enemy_->Initialize(input_);
 	stage_->Initialize();
 }
 
 void GameScene::Update()
+{
+	//SceneNum = 0;
+	switch (SceneNum)
+	{
+	case 0:
+		TitleUpdate();
+		break;
+	case 1:
+		GameUpdate();
+			break;
+	case 2:
+		EndingUpdate();
+			break;
+	}
+}
+
+void GameScene::TitleUpdate()
+{
+	float scale = 10.0f;
+	objTitle->SetPosition({ -23.0f,0.0f,0.0f });
+	objTitle->SetScale({ scale, scale, scale });
+	objTitle->SetRotation({ 0.0f,180.0f,0.0f });
+	objTitle->Update();
+	if(input_->PushKey(DIK_SPACE))
+	{
+		SceneNum = 1;
+	}
+}
+
+void GameScene::GameUpdate()
 {
 	player_->Update();
 	enemy_->Update();
@@ -26,8 +66,21 @@ void GameScene::Update()
 	CheckAllCollisons();
 }
 
+void GameScene::EndingUpdate()
+{
+	float scale = 10.0f;
+	objEnding->SetScale({ scale, scale, scale });
+	objEnding->SetRotation({ 0.0f,180.0f,0.0f });
+	objEnding->Update();
+	if (input_->PushKey(DIK_1))
+	{
+		SceneNum = 0;
+	}
+}
+
 void GameScene::SpriteDraw()
 {
+	
 	player_->SpriteDraw();
 	enemy_->SpriteDraw();
 	stage_->SpriteDraw();
@@ -35,9 +88,21 @@ void GameScene::SpriteDraw()
 
 void GameScene::ObjDraw()
 {
-	player_->ObjDraw();
-	enemy_->ObjDraw();
-	stage_->ObjDraw();
+	switch (SceneNum)
+	{
+	case 0:
+		objTitle->Draw();
+		break;
+	case 1:
+		player_->ObjDraw();
+		enemy_->ObjDraw();
+		stage_->ObjDraw();
+		break;
+	case 2:
+		objEnding->Draw();
+		break;
+	}
+
 }
 
 
@@ -69,6 +134,7 @@ void GameScene::CheckAllCollisons()
 			player_->OnCollision();
 			//敵弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
+			SceneNum = 2;
 		}
 	}
 #pragma endregion

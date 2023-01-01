@@ -18,13 +18,15 @@ public:
 	void Initialize(Input* input, SpriteCommon* spriteCommon);
 	//更新処理
 	void Update();
+	void TitleUpdate();
+	void GameUpdate();
+	void EndingUpdate();
 	//描画処理
 	void SpriteDraw();
 	void ObjDraw();
 
 	//当たり判定
 	void CheckAllCollisons();
-
 private:
 	Input* input_ = nullptr;
 	SpriteCommon* spriteCommon_ = nullptr;
@@ -33,5 +35,13 @@ private:
 	Player* player_ = new Player();
 	Enemy* enemy_ = new Enemy();
 	Stage* stage_ = new Stage();
+
+	uint16_t SceneNum = 0;//0...タイトル 1...ゲーム 3...エンディング
+
+	Model* model_title = nullptr;
+	Object3d* objTitle = Object3d::Create();
+
+	Model* model_ending = nullptr;
+	Object3d* objEnding = Object3d::Create();
 };
 

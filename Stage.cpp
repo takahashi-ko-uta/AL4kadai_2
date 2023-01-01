@@ -1,7 +1,7 @@
 #include "Stage.h"
 #include <stdio.h>
 #include <time.h>
-#define PI 3.14159
+
 
 void Stage::Initialize()
 {
