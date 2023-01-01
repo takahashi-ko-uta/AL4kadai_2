@@ -52,6 +52,7 @@ void Enemy::Move()
 		{
 			moveDirection = rand()%4+1;//1`4‚ğæ“¾
 			isMove = false;
+			moveTimer = 0;
 		}
 	}
 
@@ -116,5 +117,16 @@ void Enemy::ObjDraw()
 	//’e•`‰æ
 	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
 		bullet->Draw();
+	}
+}
+
+void Enemy::Reset()
+{
+	moveTimer = 0;
+	moveDirection = 0;
+	position_ = { 0.0f, 0.0f, 20.0f };
+	object3d->Update();
+	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
+		bullet->IsDead();
 	}
 }

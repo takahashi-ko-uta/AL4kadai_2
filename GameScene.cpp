@@ -73,6 +73,9 @@ void GameScene::EndingUpdate()
 	objEnding->SetRotation({ 0.0f,180.0f,0.0f });
 	objEnding->Update();
 	
+	player_->Reset();
+	enemy_->Reset();
+
 	const uint16_t interval = 120;
 	if(isEnding = true)
 	{
@@ -84,7 +87,6 @@ void GameScene::EndingUpdate()
 			endTimer = 0;
 		}
 	}
-
 }
 
 void GameScene::SpriteDraw()

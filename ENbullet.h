@@ -16,7 +16,7 @@ public:
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 	XMFLOAT3 GetPosition();
-
+	void Reset();
 
 	void Draw();
 

@@ -19,6 +19,7 @@ public:
 	void Update();
 	void Move();
 	void Attack();
+	void Reset();
 	//•`‰æˆ—
 	void SpriteDraw();
 	void ObjDraw();

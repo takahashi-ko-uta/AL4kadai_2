@@ -49,9 +49,12 @@ XMFLOAT3 EnemyBullet::GetPosition()
 	return worldPos;
 }
 
-
-
 void EnemyBullet::Draw()
 {
 	object3d->Draw();
+}
+
+void EnemyBullet::Reset()
+{
+	isDead_ = true;
 }

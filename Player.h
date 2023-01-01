@@ -17,6 +17,7 @@ public:
 	//XVˆ—
 	void Update();
 	void Move();
+	void Reset();
 	//•`‰æˆ—
 	void SpriteDraw();
 	void ObjDraw();
