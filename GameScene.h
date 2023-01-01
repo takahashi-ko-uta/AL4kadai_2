@@ -43,5 +43,7 @@ private:
 
 	Model* model_ending = nullptr;
 	Object3d* objEnding = Object3d::Create();
+	bool isEnding = false;
+	uint16_t endTimer = 0;
 };
 

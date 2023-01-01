@@ -72,15 +72,23 @@ void GameScene::EndingUpdate()
 	objEnding->SetScale({ scale, scale, scale });
 	objEnding->SetRotation({ 0.0f,180.0f,0.0f });
 	objEnding->Update();
-	if (input_->PushKey(DIK_1))
+	
+	const uint16_t interval = 120;
+	if(isEnding = true)
 	{
-		SceneNum = 0;
+		endTimer++;
+		if(endTimer >= interval)
+		{
+			SceneNum = 0;
+			isEnding = false;
+			endTimer = 0;
+		}
 	}
+
 }
 
 void GameScene::SpriteDraw()
 {
-	
 	player_->SpriteDraw();
 	enemy_->SpriteDraw();
 	stage_->SpriteDraw();
