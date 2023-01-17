@@ -151,7 +151,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCommon.cpp" />
-    <ClCompile Include="ENbullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -198,7 +197,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXCommon.h" />
-    <ClInclude Include="ENbullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Input.h" />

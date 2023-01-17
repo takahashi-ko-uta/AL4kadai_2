@@ -17,31 +17,25 @@ public:
 	void Initialize(Input* input);
 	//更新処理
 	void Update();
-	void Move();
-	void Attack();
+	
 	void Reset();
 	//描画処理
 	void SpriteDraw();
 	void ObjDraw();
-
-	const std::list<std::unique_ptr<EnemyBullet>>& GetBullet() { return bullets_; }
-
+	XMFLOAT3 GetPosition1();
+	XMFLOAT3 GetPosition2();
+	XMFLOAT3 GetPosition3();
+	void OnCollision();
+	
 private:
 	Input* input_ = nullptr;
 	Model* model_ = nullptr;
-	Object3d* object3d = Object3d::Create();
-	XMFLOAT3 position_ = { 0.0f,0.0f,0.0f };
+	Object3d* object_1 = Object3d::Create();
+	Object3d* object_2 = Object3d::Create(); 
+	Object3d* object_3 = Object3d::Create();
+	XMFLOAT3 position_1 = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 position_2 = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 position_3 = { 0.0f,0.0f,0.0f };
 
-	//方向切り替えのタイマー
-	uint16_t moveTimer = 0;
-	bool isMove = true;
-	uint16_t moveDirection = 0;//1...上、2...下、3...左、4...右
-
-	//弾
-	std::list<std::unique_ptr<EnemyBullet>> bullets_;
-	
-	//攻撃のタイマー
-	uint16_t atttackTimer = 0;
-	bool isAttack = false;
-
+	bool isDied = false;
 };

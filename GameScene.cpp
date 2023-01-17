@@ -29,33 +29,9 @@ void GameScene::Initialize(Input* input, SpriteCommon* spriteCommon)
 
 void GameScene::Update()
 {
-	//SceneNum = 0;
-	switch (SceneNum)
-	{
-	case 0:
-		TitleUpdate();
-		break;
-	case 1:
-		GameUpdate();
-			break;
-	case 2:
-		EndingUpdate();
-			break;
-	}
+	GameUpdate();
 }
 
-void GameScene::TitleUpdate()
-{
-	float scale = 10.0f;
-	objTitle->SetPosition({ -23.0f,0.0f,0.0f });
-	objTitle->SetScale({ scale, scale, scale });
-	objTitle->SetRotation({ 0.0f,180.0f,0.0f });
-	objTitle->Update();
-	if(input_->PushKey(DIK_SPACE))
-	{
-		SceneNum = 1;
-	}
-}
 
 void GameScene::GameUpdate()
 {
@@ -66,28 +42,6 @@ void GameScene::GameUpdate()
 	CheckAllCollisons();
 }
 
-void GameScene::EndingUpdate()
-{
-	float scale = 10.0f;
-	objEnding->SetScale({ scale, scale, scale });
-	objEnding->SetRotation({ 0.0f,180.0f,0.0f });
-	objEnding->Update();
-	
-	player_->Reset();
-	enemy_->Reset();
-
-	const uint16_t interval = 120;
-	if(isEnding = true)
-	{
-		endTimer++;
-		if(endTimer >= interval)
-		{
-			SceneNum = 0;
-			isEnding = false;
-			endTimer = 0;
-		}
-	}
-}
 
 void GameScene::SpriteDraw()
 {
@@ -98,20 +52,9 @@ void GameScene::SpriteDraw()
 
 void GameScene::ObjDraw()
 {
-	switch (SceneNum)
-	{
-	case 0:
-		objTitle->Draw();
-		break;
-	case 1:
-		player_->ObjDraw();
-		enemy_->ObjDraw();
-		stage_->ObjDraw();
-		break;
-	case 2:
-		objEnding->Draw();
-		break;
-	}
+	player_->ObjDraw();
+	enemy_->ObjDraw();
+	stage_->ObjDraw();
 
 }
 
@@ -120,32 +63,60 @@ void GameScene::CheckAllCollisons()
 {
 	//判定対象AとBの座標
 	XMFLOAT3 posA, posB;
+	const float AR = 2.0f;//Aの半径
+	const float BR = 2.0f;//Bの半径
 
-	//敵弾リストの取得
-	const std::list<std::unique_ptr<EnemyBullet>>& enemyBullets = enemy_->GetBullet();
-
-#pragma region 自キャラと敵弾の当たり判定
+#pragma region 自キャラと敵キャラ1の当たり判定
 	//自キャラの座標
 	posA = player_->GetPosition();
 
-	//自キャラと敵弾全ての当たり判定
-	for (const std::unique_ptr<EnemyBullet>& bullet : enemyBullets) {
-		//敵弾の座標
-		posB = bullet->GetPosition();
+	posB = enemy_->GetPosition1();
 
-		const float AR = 2.0f;//Aの半径
-		const float BR = 2.0f;//Bの半径
+	float A1 = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
+	float B1 = pow((AR + BR), 2);
 
-		float A = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
-		float B = pow((AR + BR), 2);
+	if (A1 <= B1) {
+		//自キャラの衝突時コールバックを呼び出す
+		player_->OnCollision();
+		//敵弾の衝突時コールバックを呼び出す
+		enemy_->OnCollision();
+		SceneNum = 2;
+	}
+#pragma endregion
 
-		if (A <= B) {
-			//自キャラの衝突時コールバックを呼び出す
-			player_->OnCollision();
-			//敵弾の衝突時コールバックを呼び出す
-			bullet->OnCollision();
-			SceneNum = 2;
-		}
+#pragma region 自キャラと敵キャラ2の当たり判定
+	//自キャラの座標
+	posA = player_->GetPosition();
+
+	posB = enemy_->GetPosition2();
+
+	float A2 = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
+	float B2 = pow((AR + BR), 2);
+
+	if (A2 <= B2) {
+		//自キャラの衝突時コールバックを呼び出す
+		player_->OnCollision();
+		//敵弾の衝突時コールバックを呼び出す
+		enemy_->OnCollision();
+		SceneNum = 2;
+	}
+#pragma endregion
+
+#pragma region 自キャラと敵キャラ3の当たり判定
+	//自キャラの座標
+	posA = player_->GetPosition();
+
+	posB = enemy_->GetPosition3();
+
+	float A3 = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
+	float B3 = pow((AR + BR), 2);
+
+	if (A3 <= B3) {
+		//自キャラの衝突時コールバックを呼び出す
+		player_->OnCollision();
+		//敵弾の衝突時コールバックを呼び出す
+		enemy_->OnCollision();
+		SceneNum = 2;
 	}
 #pragma endregion
 

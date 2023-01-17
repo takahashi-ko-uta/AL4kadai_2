@@ -8,103 +8,37 @@ void Enemy::Initialize(Input* input)
 	//オブジェクトを指定
 	model_ = Model::LoadFromOBJ("enemy");
 	//3Dオブジェクトと3Dモデルを紐づける
-	object3d->SetModel(model_);
+	object_1->SetModel(model_);
+	object_2->SetModel(model_);
+	object_3->SetModel(model_);
 	//オブジェクトの初期設定
 	float scale = 2.0f;
-	object3d->SetScale({ scale,scale,scale });
-	object3d->Update();
+	object_1->SetScale({ scale,scale,scale });
+	object_2->SetScale({ scale,scale,scale });
+	object_3->SetScale({ scale,scale,scale });
+
+	object_1->Update();
+	object_2->Update();
+	object_3->Update();
 }
 
 void Enemy::Update()
 {
-	Move();
+	position_1 = { 0,+20,0 };
+	position_2 = { -20,+20,0 };
+	position_3 = { +20,+20,0 };
 
-	//間隔をあけて攻撃する
-	const uint16_t interval = 50;
-	if (atttackTimer <= interval)
-	{
-		atttackTimer++;
-		if (atttackTimer >= interval)
-		{
-			Attack();
-			atttackTimer = 0;
-		}
-	}
-	
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->Update();
-	}
+	object_1->SetPosition({ position_1.x,position_1.y,position_1.z });
+	object_2->SetPosition({ position_2.x,position_2.y,position_2.z });
+	object_3->SetPosition({ position_3.x,position_3.y,position_3.z });
 
-	//デスフラグが立った弾を排除
-	bullets_.remove_if([](std::unique_ptr<EnemyBullet>& bullet) { return bullet->IsDead(); });
+	object_1->Update();
+	object_2->Update();
+	object_3->Update();
+
 }
 
-void Enemy::Move()
-{
-	float speed = 0.3f;
-	uint16_t interval = 20;
-	srand(time(nullptr));
-	//方向を抽選
-	if(isMove == true)
-	{
-		++moveTimer;
-		if(moveTimer >= interval)
-		{
-			moveDirection = rand()%4+1;//1～4を取得
-			isMove = false;
-			moveTimer = 0;
-		}
-	}
 
-	//移動
-	switch (moveDirection)
-	{
-	case 1://上
-		if (position_.y <= 27.0f){
-			position_.y += speed;
-		}
-		isMove = true;
-		break; 
-	case 2://下
-		if (position_.y >= -27.0f) {
-			position_.y -= speed;
-		}
-		isMove = true;
-		break;
-	case 3://左
-		if (position_.x >= -50.0f) {
-			position_.x -= speed;
-		}
-		isMove = true;
-		break;
-	case 4://右
-		if (position_.x <= 50.0f) {
-			position_.x += speed;
-		}
-		isMove = true;
-		break;
-	}
-
-	//デバック用
-	if (input_->PushKey(DIK_D)) {
-		position_.x = 0.0f;
-		position_.y = 0.0f;
-	}
-
-	position_.z = +20.0f;
-	object3d->SetPosition({ position_.x, position_.y, position_.z });
-	object3d->Update();
-}
-
-void Enemy::Attack()
-{
-	//弾を生成し、初期化
-	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
-	newBullet->Initialize(model_,position_);
-
-	//弾を登録する
-	bullets_.push_back(std::move(newBullet));
-}
 
 void Enemy::SpriteDraw()
 {
@@ -113,20 +47,52 @@ void Enemy::SpriteDraw()
 
 void Enemy::ObjDraw()
 {
-	object3d->Draw();
-	//弾描画
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->Draw();
+	if(isDied == false)
+	{
+		object_1->Draw();
+		object_2->Draw();
+		object_3->Draw();
 	}
 }
 
-void Enemy::Reset()
+XMFLOAT3 Enemy::GetPosition1()
 {
-	moveTimer = 0;
-	moveDirection = 0;
-	position_ = { 0.0f, 0.0f, 20.0f };
-	object3d->Update();
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->IsDead();
-	}
+	//ワールド座標を入れる変数
+	XMFLOAT3 worldPos;
+	//ワールド行列の平行移動成分を取得
+
+	worldPos.x = position_1.x;
+	worldPos.y = position_1.y;
+	worldPos.z = position_1.z;
+
+	return worldPos;
+}
+XMFLOAT3 Enemy::GetPosition2()
+{
+	//ワールド座標を入れる変数
+	XMFLOAT3 worldPos;
+	//ワールド行列の平行移動成分を取得
+
+	worldPos.x = position_2.x;
+	worldPos.y = position_2.y;
+	worldPos.z = position_2.z;
+
+	return worldPos;
+}
+XMFLOAT3 Enemy::GetPosition3()
+{
+	//ワールド座標を入れる変数
+	XMFLOAT3 worldPos;
+	//ワールド行列の平行移動成分を取得
+
+	worldPos.x = position_3.x;
+	worldPos.y = position_3.y;
+	worldPos.z = position_3.z;
+
+	return worldPos;
+}
+
+void Enemy::OnCollision()
+{
+	isDied = true;
 }

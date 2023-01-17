@@ -18,9 +18,7 @@ public:
 	void Initialize(Input* input, SpriteCommon* spriteCommon);
 	//XVˆ—
 	void Update();
-	void TitleUpdate();
 	void GameUpdate();
-	void EndingUpdate();
 	//•`‰æˆ—
 	void SpriteDraw();
 	void ObjDraw();
