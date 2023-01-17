@@ -19,13 +19,17 @@ public:
 	void Update();
 	void Move();
 	void Attack();
-	void Reset();
+	
 	//描画処理
 	void SpriteDraw();
 	void ObjDraw();
 
 	const std::list<std::unique_ptr<EnemyBullet>>& GetBullet() { return bullets_; }
 
+	//自作メンバ関数
+	void Approach();
+	void Shot();
+	void Leave();
 private:
 	Input* input_ = nullptr;
 	Model* model_ = nullptr;
@@ -44,4 +48,7 @@ private:
 	uint16_t atttackTimer = 0;
 	bool isAttack = false;
 
+	//メンバ関数ポインタのテーブル
+	static void (Enemy::* spFuncTamle[])();
+	uint16_t moveNum = 0;
 };

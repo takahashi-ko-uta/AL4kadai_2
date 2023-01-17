@@ -11,26 +11,57 @@ void Enemy::Initialize(Input* input)
 	object3d->SetModel(model_);
 	//オブジェクトの初期設定
 	float scale = 2.0f;
+	position_ = { -40.0f,20.0f,0.0f };
+	object3d->SetPosition({ position_.x, position_.y, position_.z });
 	object3d->SetScale({ scale,scale,scale });
 	object3d->Update();
 }
+
+void Enemy::Approach()
+{
+	if(position_.x <= 0.0f)
+	{
+		position_.x += 0.5f;
+	}
+	else 
+	{
+		moveNum = 1;
+	}
+	object3d->SetPosition({ position_.x, position_.y, position_.z });
+	object3d->Update();
+}
+
+void Enemy::Shot()
+{
+	//弾を生成し、初期化
+	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
+	newBullet->Initialize(model_, position_);
+
+	//弾を登録する
+	bullets_.push_back(std::move(newBullet));
+
+	moveNum = 2;
+}
+
+void Enemy::Leave()
+{
+	position_.x++;
+	position_.y += 3;
+
+	object3d->SetPosition({ position_.x, position_.y, position_.z });
+	object3d->Update();
+}
+
+void(Enemy::* Enemy::spFuncTamle[])() = {
+	&Enemy::Approach, //接近
+	&Enemy::Shot,     //射撃
+	&Enemy::Leave	  //離脱
+};
 
 void Enemy::Update()
 {
 	Move();
 
-	//間隔をあけて攻撃する
-	const uint16_t interval = 50;
-	if (atttackTimer <= interval)
-	{
-		atttackTimer++;
-		if (atttackTimer >= interval)
-		{
-			Attack();
-			atttackTimer = 0;
-		}
-	}
-	
 	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
 		bullet->Update();
 	}
@@ -41,59 +72,18 @@ void Enemy::Update()
 
 void Enemy::Move()
 {
-	float speed = 0.3f;
-	uint16_t interval = 20;
-	srand(time(nullptr));
-	//方向を抽選
-	if(isMove == true)
+	switch (moveNum)
 	{
-		++moveTimer;
-		if(moveTimer >= interval)
-		{
-			moveDirection = rand()%4+1;//1～4を取得
-			isMove = false;
-			moveTimer = 0;
-		}
-	}
-
-	//移動
-	switch (moveDirection)
-	{
-	case 1://上
-		if (position_.y <= 27.0f){
-			position_.y += speed;
-		}
-		isMove = true;
-		break; 
-	case 2://下
-		if (position_.y >= -27.0f) {
-			position_.y -= speed;
-		}
-		isMove = true;
+	case 0:
+		(this->*spFuncTamle[0])();
 		break;
-	case 3://左
-		if (position_.x >= -50.0f) {
-			position_.x -= speed;
-		}
-		isMove = true;
+	case 1:
+		(this->*spFuncTamle[1])();
 		break;
-	case 4://右
-		if (position_.x <= 50.0f) {
-			position_.x += speed;
-		}
-		isMove = true;
+	case 2:
+		(this->*spFuncTamle[2])();
 		break;
 	}
-
-	//デバック用
-	if (input_->PushKey(DIK_D)) {
-		position_.x = 0.0f;
-		position_.y = 0.0f;
-	}
-
-	position_.z = +20.0f;
-	object3d->SetPosition({ position_.x, position_.y, position_.z });
-	object3d->Update();
 }
 
 void Enemy::Attack()
@@ -120,13 +110,5 @@ void Enemy::ObjDraw()
 	}
 }
 
-void Enemy::Reset()
-{
-	moveTimer = 0;
-	moveDirection = 0;
-	position_ = { 0.0f, 0.0f, 20.0f };
-	object3d->Update();
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->IsDead();
-	}
-}
+
+

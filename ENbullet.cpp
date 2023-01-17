@@ -20,7 +20,7 @@ void EnemyBullet::Initialize(Model* model, const XMFLOAT3& position)
 
 void EnemyBullet::Update() 
 {
-	position_.z -= speed;
+	position_.y -= speed;
 	//”½‰f
 	object3d->SetPosition(position_);
 	object3d->Update();

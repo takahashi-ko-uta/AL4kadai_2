@@ -25,6 +25,8 @@ public:
 
 	//“–‚½‚è”»’è
 	void CheckAllCollisons();
+
+	
 private:
 	Input* input_ = nullptr;
 	SpriteCommon* spriteCommon_ = nullptr;
