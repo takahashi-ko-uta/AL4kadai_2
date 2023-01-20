@@ -39,6 +39,12 @@ void GameScene::Update()
 
 void GameScene::GameUpdate()
 {
+	//enemy‚ÌÀ•WÝ’è
+	enemy_1->SetPosision({ 0.0f,20.0f,0.0f });
+	enemy_2->SetPosision({ 20.0f,20.0f,0.0f });
+	enemy_3->SetPosision({ -20.0f,20.0f,0.0f });
+
+
 	player_->Update();
 	enemy_1->Update();
 	enemy_2->Update();

@@ -23,7 +23,8 @@ public:
 	void SpriteDraw();
 	void ObjDraw();
 	XMFLOAT3 GetPosition();
-	
+	void SetPosision(XMFLOAT3 pos) { position_ = pos; }
+
 	void OnCollision();
 	
 private:

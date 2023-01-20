@@ -19,7 +19,7 @@ void Enemy::Initialize(Input* input)
 
 void Enemy::Update()
 {
-	position_ = { 0,+20,0 };
+	//position_ = { 0,+20,0 };
 	object3d->SetPosition({ position_.x,position_.y,position_.z });
 	object3d->Update();
 }
