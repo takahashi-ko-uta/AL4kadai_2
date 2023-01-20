@@ -13,6 +13,8 @@ using namespace DirectX;
 class Enemy
 {
 public:
+	static int isDied;
+public:
 	//‰Šú‰»ˆ—
 	void Initialize(Input* input);
 	//XVˆ—
@@ -34,6 +36,6 @@ private:
 	
 	XMFLOAT3 position_ = { 0.0f,0.0f,0.0f };
 	
-
-	bool isDied = false;
+	
+	
 };

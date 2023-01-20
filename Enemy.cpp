@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 
+int Enemy::isDied;
+
 void Enemy::Initialize(Input* input)
 {
 	input_ = input;
@@ -33,7 +35,7 @@ void Enemy::SpriteDraw()
 
 void Enemy::ObjDraw()
 {
-	if(isDied == false)
+	if(isDied <= 0)
 	{
 		object3d->Draw();
 	}
@@ -55,5 +57,5 @@ XMFLOAT3 Enemy::GetPosition()
 
 void Enemy::OnCollision()
 {
-	isDied = true;
+	isDied++;
 }
