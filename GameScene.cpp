@@ -6,7 +6,9 @@ GameScene::GameScene(){}
 GameScene::~GameScene()
 {
 	delete player_;
-	delete enemy_;
+	delete enemy_1;
+	delete enemy_2;
+	delete enemy_3;
 	delete stage_;
 }
 
@@ -23,7 +25,9 @@ void GameScene::Initialize(Input* input, SpriteCommon* spriteCommon)
 	objEnding->SetModel(model_ending);
 
 	player_->Initialize(input_);
-	enemy_->Initialize(input_);
+	enemy_1->Initialize(input_);
+	enemy_2->Initialize(input_);
+	enemy_3->Initialize(input_);
 	stage_->Initialize();
 }
 
@@ -36,7 +40,9 @@ void GameScene::Update()
 void GameScene::GameUpdate()
 {
 	player_->Update();
-	enemy_->Update();
+	enemy_1->Update();
+	enemy_2->Update();
+	enemy_3->Update();
 	stage_->Update();
 	//当たり判定
 	CheckAllCollisons();
@@ -46,14 +52,16 @@ void GameScene::GameUpdate()
 void GameScene::SpriteDraw()
 {
 	player_->SpriteDraw();
-	enemy_->SpriteDraw();
+	enemy_1->SpriteDraw();
 	stage_->SpriteDraw();
 }
 
 void GameScene::ObjDraw()
 {
 	player_->ObjDraw();
-	enemy_->ObjDraw();
+	enemy_1->ObjDraw();
+	enemy_2->ObjDraw();
+	enemy_3->ObjDraw();
 	stage_->ObjDraw();
 
 }
@@ -70,7 +78,7 @@ void GameScene::CheckAllCollisons()
 	//自キャラの座標
 	posA = player_->GetPosition();
 
-	posB = enemy_->GetPosition1();
+	posB = enemy_1->GetPosition();
 
 	float A1 = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
 	float B1 = pow((AR + BR), 2);
@@ -79,7 +87,7 @@ void GameScene::CheckAllCollisons()
 		//自キャラの衝突時コールバックを呼び出す
 		player_->OnCollision();
 		//敵弾の衝突時コールバックを呼び出す
-		enemy_->OnCollision();
+		enemy_1->OnCollision();
 		SceneNum = 2;
 	}
 #pragma endregion
@@ -88,7 +96,7 @@ void GameScene::CheckAllCollisons()
 	//自キャラの座標
 	posA = player_->GetPosition();
 
-	posB = enemy_->GetPosition2();
+	posB = enemy_2->GetPosition();
 
 	float A2 = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
 	float B2 = pow((AR + BR), 2);
@@ -97,7 +105,7 @@ void GameScene::CheckAllCollisons()
 		//自キャラの衝突時コールバックを呼び出す
 		player_->OnCollision();
 		//敵弾の衝突時コールバックを呼び出す
-		enemy_->OnCollision();
+		enemy_2->OnCollision();
 		SceneNum = 2;
 	}
 #pragma endregion
@@ -106,7 +114,7 @@ void GameScene::CheckAllCollisons()
 	//自キャラの座標
 	posA = player_->GetPosition();
 
-	posB = enemy_->GetPosition3();
+	posB = enemy_3->GetPosition();
 
 	float A3 = pow((posB.x - posA.x), 2) + pow((posB.y - posA.y), 2) + pow((posB.z - posA.z), 2);
 	float B3 = pow((AR + BR), 2);
@@ -115,9 +123,8 @@ void GameScene::CheckAllCollisons()
 		//自キャラの衝突時コールバックを呼び出す
 		player_->OnCollision();
 		//敵弾の衝突時コールバックを呼び出す
-		enemy_->OnCollision();
+		enemy_3->OnCollision();
 		SceneNum = 2;
 	}
 #pragma endregion
-
 }

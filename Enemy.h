@@ -22,20 +22,17 @@ public:
 	//ï`âÊèàóù
 	void SpriteDraw();
 	void ObjDraw();
-	XMFLOAT3 GetPosition1();
-	XMFLOAT3 GetPosition2();
-	XMFLOAT3 GetPosition3();
+	XMFLOAT3 GetPosition();
+	
 	void OnCollision();
 	
 private:
 	Input* input_ = nullptr;
 	Model* model_ = nullptr;
-	Object3d* object_1 = Object3d::Create();
-	Object3d* object_2 = Object3d::Create(); 
-	Object3d* object_3 = Object3d::Create();
-	XMFLOAT3 position_1 = { 0.0f,0.0f,0.0f };
-	XMFLOAT3 position_2 = { 0.0f,0.0f,0.0f };
-	XMFLOAT3 position_3 = { 0.0f,0.0f,0.0f };
+	Object3d* object3d = Object3d::Create();
+	
+	XMFLOAT3 position_ = { 0.0f,0.0f,0.0f };
+	
 
 	bool isDied = false;
 };

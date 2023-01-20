@@ -31,7 +31,9 @@ private:
 	DirectXCommon* dxCommon_ = nullptr;
 	//各クラスの呼び出し
 	Player* player_ = new Player();
-	Enemy* enemy_ = new Enemy();
+	Enemy* enemy_1 = new Enemy();
+	Enemy* enemy_2 = new Enemy();
+	Enemy* enemy_3 = new Enemy();
 	Stage* stage_ = new Stage();
 
 	uint16_t SceneNum = 0;//0...タイトル 1...ゲーム 3...エンディング
