@@ -72,18 +72,7 @@ void Enemy::Update()
 
 void Enemy::Move()
 {
-	switch (moveNum)
-	{
-	case 0:
-		(this->*spFuncTamle[0])();
-		break;
-	case 1:
-		(this->*spFuncTamle[1])();
-		break;
-	case 2:
-		(this->*spFuncTamle[2])();
-		break;
-	}
+	(this->*spFuncTamle[moveNum])();
 }
 
 void Enemy::Attack()
